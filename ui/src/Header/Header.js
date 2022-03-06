@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
+import {Link} from 'react-router-dom';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -66,7 +67,7 @@ export default function Header() {
                 inputProps={{ 'aria-label': 'search' }}
             />
             </Search>
-            <Button color="inherit">LOGOUT</Button>
+            <Button color="inherit"><Link style={{textDecoration: "none", color: "white"}} to="/login">LOGOUT</Link></Button>
         </Toolbar>
         </AppBar>
         </Box>
