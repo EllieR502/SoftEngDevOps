@@ -3,24 +3,15 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 import AdminView from "./AdminView/AdminView";
 import LoginPage from "./LoginPage/LoginPage";
 import UserView from "./UserView/UserView";
-
-const Tickets = [
-  {
-    id: 1,
-    title: "Do the shit",
-    assignee: "Ell",
-    status: "To Do",
-  },
-  {},
-];
+import SignUpPage from "./SignUpPage/SignUpPage";
 
 function App() {
   return (
     <Routes>
-      {/* need a signup page */}
-      <Route path="/login" element={<LoginPage />} />
+      <Route path="/signup" element={<SignUpPage />} />
       <Route path="/admin" element={<AdminView />} />
-      <Route path="/" element={<UserView />} />
+      <Route path="/tickets" element={<UserView />} />
+      <Route path="/" element={<LoginPage />} />
     </Routes>
   );
 }

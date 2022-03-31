@@ -10,6 +10,7 @@ import {
   IconButton,
   Typography,
   TextField,
+  MenuItem,
 } from "@mui/material";
 import PropTypes from "prop-types";
 import { styled } from "@mui/material/styles";
@@ -67,9 +68,9 @@ export default function TicketModal({
   const description = useRef("");
   const [defaultTicketTitle, setDefaultTicketTitle] = useState("");
   const [defaultDescription, setDefaultDescription] = useState("");
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    console.log(ticketId);
     if (ticketId) {
       try {
         axios
@@ -84,10 +85,16 @@ export default function TicketModal({
         console.log(err);
       }
     }
+    try {
+      axios.get(`http://localhost:8080/users`).then((response) => {
+        setUsers(response.data);
+      });
+    } catch (err) {
+      console.log(err);
+    }
   }, []);
 
   const addTicket = () => {
-    console.log(status.current);
     try {
       axios
         .post(
@@ -96,8 +103,21 @@ export default function TicketModal({
         .then((response) => {
           console.log(response);
         });
+      getTicketFunction();
+    } catch (err) {
+      console.log(err);
+    }
+    handleClose();
+  };
 
-      //refetch tickets
+  const deleteTicket = () => {
+    try {
+      axios
+        .delete(`http://localhost:8080/ticket?ticketID=${ticketId}`)
+        .then((response) => {
+          console.log(response);
+        });
+
       getTicketFunction();
     } catch (err) {
       console.log(err);
@@ -131,7 +151,7 @@ export default function TicketModal({
             label="Assignee"
             data={assignee}
             setData={setAssignee}
-            selectOptions={["Ell", "Someone Else", "Ellie"]}
+            selectOptions={users.map((user) => user.fullName)}
           />
         </Grid>
         <Grid item>
@@ -161,11 +181,8 @@ export default function TicketModal({
         <Button autoFocus onClick={addTicket}>
           ADD
         </Button>
-        <Button autoFocus onClick={handleClose}>
-          EDIT
-        </Button>
-        <Button autoFocus onClick={handleClose}>
-          delete ticket
+        <Button autoFocus onClick={deleteTicket}>
+          DELETE
         </Button>
       </DialogActions>
     </BootstrapDialog>

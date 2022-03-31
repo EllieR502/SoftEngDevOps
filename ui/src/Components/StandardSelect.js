@@ -7,8 +7,6 @@ export default function StandardSelect({
   data,
   setData,
 }) {
-  //   const [data, setData] = React.useState("");
-
   const handleChange = (event) => {
     setData(event.target.value);
   };
